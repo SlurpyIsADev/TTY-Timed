@@ -91,17 +91,18 @@ switch (num) {
     return 0;
 }
 void display() {
-	initscr();
+	//initscr();
+	printf("\e[1;1H\e[2J");
 	sleep(1);
 	stopwatch();
 	for (int i = 0; i < 5; i++) {
-	printw("%s %s %s %s %s\n", format(minutes/10, i), format(minutes%10, i), colon[i], format(seconds/10, i), format(seconds%10, i));
+	printf("%s %s %s %s %s\n", format(minutes/10, i), format(minutes%10, i), colon[i], format(seconds/10, i), format(seconds%10, i));
 	}
-	refresh();
+	//refresh();
 	//printf("%d\n", seconds);
 	//printf("%d\n", minutes);
 	//printf("%d\n", hours);
-	//fflush(stdout);
+	fflush(stdout);
 }
 
 int main() {
@@ -111,4 +112,3 @@ int main() {
 	}
 	return 0;	
 }
-
