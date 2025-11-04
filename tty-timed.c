@@ -85,30 +85,38 @@ switch (num) {
         return a9[x];
         break;
     default:
-        printf("Default case... uh oh");
+        printw("Default case... uh oh");
         break;
     }
     return 0;
 }
 void display() {
-	//initscr();
-	printf("\e[1;1H\e[2J");
-	sleep(1);
 	stopwatch();
 	for (int i = 0; i < 5; i++) {
-	printf("%s %s %s %s %s\n", format(minutes/10, i), format(minutes%10, i), colon[i], format(seconds/10, i), format(seconds%10, i));
+		//days
+		if(days > 0){printw("%s %s %s",format(days/10, i), format(days%10, i), colon[i]);}
+		//hours
+		if(hours > 0){printw("%s %s %s",format(hours/10, i), format(hours%10, i), colon[i]);}
+		//minutes and seconds
+		printw("%s %s %s %s %s", format(minutes/10, i), format(minutes%10, i), colon[i], format(seconds/10, i), format(seconds%10, i));
+		//new line
+		printw("\n");
 	}
-	//refresh();
-	//printf("%d\n", seconds);
-	//printf("%d\n", minutes);
-	//printf("%d\n", hours);
-	fflush(stdout);
+	refresh();
+	sleep(1);
+	erase(); 
 }
 
 int main() {
+	setlocale(LC_ALL, "");  
+	initscr();
+	cbreak();
+	noecho();
 	bool x = true;
 	while (x) {
 		display();
 	}
+	endwin();
 	return 0;	
 }
+
