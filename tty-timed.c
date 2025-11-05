@@ -24,7 +24,7 @@ struct time {
 
 int seconds = 0;
 int minutes = 0;
-int hours = 0;
+int hours = -1;
 int days = 0;
 int addedx = 0;
 
