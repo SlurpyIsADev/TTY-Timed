@@ -126,7 +126,7 @@ void display() {
 		printw("\n");
 	}
 	refresh();
-	sleep(0.1);
+	sleep(1);
 	erase();
 }
 
