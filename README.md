@@ -8,4 +8,5 @@ git clone https://github.com/SlurpyIsADev/TTY-Timed.git
 cd TTY-Timed
 gcc tty-timed.c Font/default-font.c -lncurses -o tty-timed
 #skip the command below if you don't want to run it
-./tty-timed
+# you can do "stopwatch", "timer", or "random" for the first argument
+./tty-timed random
