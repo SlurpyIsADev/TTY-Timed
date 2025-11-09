@@ -1,5 +1,5 @@
 # TTY-Timed
-A TUI timer and stopwatch script made for Linux 
+A simple TUI timer and stopwatch script made for Linux 
 
 ### How to use (currently)
 
