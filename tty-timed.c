@@ -121,9 +121,9 @@ void display() {
 			move((get_term_size(false)/2)+i-2,(get_term_size(true)/2)-15-addedx);
 		}
 		//days
-		if(days > 0){printw("%s %s %s",format(days/10, i), format(days%10, i), colon[i]);}
+		if(days > 0){printw("%s %s %s ",format(days/10, i), format(days%10, i), colon[i]);}
 		//hours
-		if(hours > 0 || days > 0){printw("%s %s %s",format(hours/10, i), format(hours%10, i), colon[i]);}
+		if(hours > 0 || days > 0){printw("%s %s %s ",format(hours/10, i), format(hours%10, i), colon[i]);}
 		//minutes and seconds
 		printw("%s %s %s %s %s", format(minutes/10, i), format(minutes%10, i), colon[i], format(seconds/10, i), format(seconds%10, i));
 		//new line
