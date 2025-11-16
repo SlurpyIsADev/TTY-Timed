@@ -9,6 +9,7 @@
 #include <ncurses.h>
 #include <sys/ioctl.h>
 #include <time.h>
+#include <ctype.h>
 #include "Font/default-font.h"
 
 #ifndef COMMIT
@@ -16,8 +17,13 @@
 #endif
 
 
-char color;
-char name;
+bool usingcolors = false; 
+struct dRGB {
+	int r;
+	int g;
+	int b;
+};
+char* name = "";
 bool iscentered = true;
 bool canpause = true;
 bool ispaused = false;
@@ -94,7 +100,7 @@ switch (num) {
         return a9[x];
         break;
     default:
-        printw("Default case... uh oh");
+        printw("Default case... you broke it :(");
         break;
     }
     return 0;
@@ -112,10 +118,17 @@ unsigned get_term_size(bool get_term_width) {
 }
 
 void help() {
-	printf("Insert helpscreen here\n");
+	printf("uhhh... idk good luck\n");
 }
 
 void display() {
+	if (name != ""){
+		if(iscentered){
+			move((get_term_size(false)/2)-4,(get_term_size(true)/2)-(strlen(name)/2)+1);
+		}
+		printw("%s\n", name);
+	}
+
 	for (int i = 0; i < 5; i++) {
 		if(iscentered){
 			move((get_term_size(false)/2)+i-2,(get_term_size(true)/2)-15-addedx);
@@ -140,6 +153,7 @@ void display() {
 	refresh();
 }
 
+
 int main(int argc, char *argv[]) {
 	//if there are no args, return the help screen
 	if(argc == 1){
@@ -151,12 +165,13 @@ int main(int argc, char *argv[]) {
 	srand(time(NULL));
 	void (*LogicFunc)();
 	int skiparg = 0;
+	struct dRGB rgbColor;
 
 	//main loop
 	for (int i = 1; i < argc; i++) {
 		if (skiparg == 0) {
 			//version
-			if((strcmp(argv[i], "-v") == 0) || (strcmp(argv[i], "-version") == 0)) {
+			if((strcmp(argv[i], "-v") == 0) || (strcmp(argv[i], "--version") == 0)) {
 				printf("Version: uhh... idk\n");
 				if(COMMIT != "") {
 				printf("Built at commit %s\n", COMMIT);
@@ -165,30 +180,30 @@ int main(int argc, char *argv[]) {
 			}
 
 			//debug
-			else if((strcmp(argv[i], "-d") == 0) || (strcmp(argv[i], "-debug") == 0)) {
+			else if((strcmp(argv[i], "-d") == 0) || (strcmp(argv[i], "--debug") == 0)) {
 				debugmode = true;
 			}
 
 			//seconds added
-			else if((strcmp(argv[i], "-S") == 0) || (strcmp(argv[i], "-seconds") == 0)) {
+			else if((strcmp(argv[i], "-S") == 0) || (strcmp(argv[i], "--seconds") == 0)) {
 				skiparg++;
 				seconds = atoi(argv[i+1]);
 			}
 
 			//minutes added
-			else if((strcmp(argv[i], "-M") == 0) || (strcmp(argv[i], "-minutes") == 0)) {
+			else if((strcmp(argv[i], "-M") == 0) || (strcmp(argv[i], "--minutes") == 0)) {
 				skiparg++;
 				minutes = atoi(argv[i+1]);
 			}
 
 			//hours added
-			else if((strcmp(argv[i], "-H") == 0) || (strcmp(argv[i], "-hours") == 0)) {
+			else if((strcmp(argv[i], "-H") == 0) || (strcmp(argv[i], "--hours") == 0)) {
 				skiparg++;
 				hours = atoi(argv[i+1]);
 			}
 
 			//centered
-			else if((strcmp(argv[i], "-c") == 0) || (strcmp(argv[i], "-iscentered") == 0)) {
+			else if((strcmp(argv[i], "-c") == 0) || (strcmp(argv[i], "--iscentered") == 0)) {
 				skiparg++;
 				if(atoi(argv[i+1]) == 0){
 					iscentered = false;
@@ -204,7 +219,7 @@ int main(int argc, char *argv[]) {
 			}
 			
 			//pausing
-			else if((strcmp(argv[i], "-p") == 0) || (strcmp(argv[i], "-canpause") == 0)) {
+			else if((strcmp(argv[i], "-p") == 0) || (strcmp(argv[i], "--canpause") == 0)) {
 				skiparg++;
 				if(atoi(argv[i+1]) == 0){
 					canpause = false;
@@ -220,11 +235,59 @@ int main(int argc, char *argv[]) {
 			}
 
 			//help
-			else if((strcmp(argv[i], "-h") == 0) || (strcmp(argv[i], "-help") == 0)) {
+			else if((strcmp(argv[i], "-h") == 0) || (strcmp(argv[i], "--help") == 0)) {
 				help();
 				return 0;
 			}
+
+			//color
+			else if((strcmp(argv[i], "-C") == 0) || (strcmp(argv[i], "--color") == 0)) {
+				usingcolors = true;
+				skiparg++;
+				if ((strcmp(argv[i+1], "direct") == 0)) {
+					skiparg += 3;
+					rgbColor.r = atoi(argv[i+2]);
+					rgbColor.g = atoi(argv[i+3]);
+					rgbColor.b = atoi(argv[i+4]);
+
+				}
+				else if ((strcmp(argv[i+1], "rgb") == 0)) {
+					skiparg += 3;
+					rgbColor.r = (int)(atoi(argv[i+2])*3.9215686274509802);
+					rgbColor.g = (int)(atoi(argv[i+3])*3.9215686274509802);
+					rgbColor.b = (int)(atoi(argv[i+4])*3.9215686274509802);
+
+				}
+				else if ((strcmp(argv[i+1], "hex") == 0)) {
+					skiparg++;
+					char hex[6];
+					int h[6];
+					strcpy(hex, argv[i+2]);
+					for (int i = 0; i < 6; i++) {
+						if(isdigit(hex[i])){
+							h[i] = hex[i] - '0';
+							//printf("Digit ");
+						}
+						else {
+							h[i] = (int)(tolower(hex[i]) - 'a' + 10);
+							//printf("No Digit ");
+						}
+						//printf("On iteration %d: %d\n", i, h[i]);
+					}
+					rgbColor.r = ((h[0]*16) + h[1])*3.9215686274509802;
+					rgbColor.g = ((h[2]*16) + h[3])*3.9215686274509802;
+					rgbColor.b = ((h[4]*16) + h[5])*3.9215686274509802;
+					//This was painful for someone who doesn't use c
+				}
+				//printf("%d, %d, %d\n", rgbColor.r, rgbColor.g, rgbColor.b);
+				//return 0;
+			}
 			
+			else if((strcmp(argv[i], "-n") == 0) || (strcmp(argv[i], "--name") == 0)) {
+				skiparg++;
+				name = argv[i+1];
+			}
+
 			//Unrecongized option
 			else if(argv[i] != NULL && i != 1) {
 				printf("Unrecognized option '%s', here is some help: \n", argv[i]);
@@ -237,12 +300,17 @@ int main(int argc, char *argv[]) {
 		}
     }
 
+	//stopwatch (obv)
 	if(strcmp(argv[1], "stopwatch") == 0){
 		LogicFunc = &stopwatch;
 	}
+
+	//timer (obv)
 	else if(strcmp(argv[1], "timer") == 0){
 		LogicFunc = &timer;
 	}
+
+	//random (obv)
 	else if(strcmp(argv[1], "random") == 0){
 		if(rand()%2 == 1){
 			LogicFunc = &stopwatch;
@@ -263,9 +331,16 @@ int main(int argc, char *argv[]) {
 	cbreak();
 	noecho();
 	curs_set(0);
+	if (usingcolors){
+		use_default_colors();
+		start_color();
+		init_color(COLOR_WHITE, rgbColor.r, rgbColor.g, rgbColor.b);
+		init_pair(1, COLOR_WHITE, -1);
+		attron(COLOR_PAIR(1));
+	}
 	bool x = true;
 	abseconds = (days * 86400) + (hours * 3600) + (minutes * 60) + seconds;
-	while (abseconds >= 0) {
+	while (abseconds >= 0 && abseconds < 8640000) {
 		if(ispaused == false) {
 			timeMath();
 			display();
@@ -287,10 +362,11 @@ int main(int argc, char *argv[]) {
 			erase();
 		}
 		if (debugmode){
+				//Debug stuff
 				printw("Days: %d Hours: %d Minutes: %d Seconds: %d\n",days,hours,minutes,seconds);
 				printw("Absolute Seconds: %d\n",abseconds);
 				printw("Is Paused: %d\n",ispaused);
-				refresh(); //Debug stuff
+				refresh();
 			}
 	}
 	endwin();
