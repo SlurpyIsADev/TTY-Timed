@@ -10,6 +10,7 @@
 #include <sys/ioctl.h>
 #include <time.h>
 #include <ctype.h>
+#include <signal.h>
 #include "Font/default-font.h"
 
 #ifndef COMMIT
@@ -24,6 +25,10 @@ struct dRGB {
 	int b;
 };
 char* name = "";
+char command[256] = "";
+int system(const char *command);
+int comi = 0;
+int comabseconds = 0;
 bool iscentered = true;
 bool canpause = true;
 bool ispaused = false;
@@ -153,6 +158,10 @@ void display() {
 	refresh();
 }
 
+void CtrlCHandler(int dummy) {
+	comabseconds = abseconds;
+	abseconds = -1;
+}
 
 int main(int argc, char *argv[]) {
 	//if there are no args, return the help screen
@@ -287,6 +296,10 @@ int main(int argc, char *argv[]) {
 				skiparg++;
 				name = argv[i+1];
 			}
+			else if((strcmp(argv[i], "--run") == 0)) {
+				skiparg =  argc-i;
+				comi = i;
+			}
 
 			//Unrecongized option
 			else if(argv[i] != NULL && i != 1) {
@@ -331,7 +344,8 @@ int main(int argc, char *argv[]) {
 	cbreak();
 	noecho();
 	curs_set(0);
-	if (usingcolors){
+	signal(SIGINT, CtrlCHandler);
+	if (usingcolors && has_colors()){
 		use_default_colors();
 		start_color();
 		init_color(COLOR_WHITE, rgbColor.r, rgbColor.g, rgbColor.b);
@@ -370,6 +384,28 @@ int main(int argc, char *argv[]) {
 			}
 	}
 	endwin();
+
+	//if this doesn't work when i commit, it's because it decides when it if it wants to work or not
+	if(command != "") {
+		if(comi != 0) {
+			char target[strlen(name)+1];
+			sprintf(target, "%s%s","%",name);
+			char secondsSTR[20];
+			sprintf(secondsSTR, "%d", comabseconds);
+			for (int f = 1; f < argc-comi; f++) {
+				if (strcmp(argv[f+comi], target) == 0) {
+					strcat(command, secondsSTR);
+				}
+				else {
+					strcat(command, argv[f+comi]);
+					printf("Argv: %s\nTarget: %s\n", argv[f+comi], target);
+				}
+				strcat(command, " ");
+			}
+		}
+		printf("Running: %s\n", command);
+		system(command);
+	}
 	return 0;	
 }
 
