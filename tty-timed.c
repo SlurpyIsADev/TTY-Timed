@@ -127,7 +127,7 @@ void help() {
 }
 
 void display() {
-	if (name != ""){
+	if (strlen(name) != 0){
 		if(iscentered){
 			move((get_term_size(false)/2)-4,(get_term_size(true)/2)-(strlen(name)/2)+1);
 		}
@@ -160,7 +160,7 @@ void display() {
 
 void CtrlCHandler(int dummy) {
 	comabseconds = abseconds;
-	abseconds = -1;
+	abseconds = -999;
 }
 
 int main(int argc, char *argv[]) {
@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
 		if (skiparg == 0) {
 			//version
 			if((strcmp(argv[i], "-v") == 0) || (strcmp(argv[i], "--version") == 0)) {
-				printf("Version: uhh... idk\n");
+				printf("Version: Somewhere closer to release idk\n");
 				if(COMMIT != "") {
 				printf("Built at commit %s\n", COMMIT);
 				}
@@ -386,7 +386,6 @@ int main(int argc, char *argv[]) {
 	endwin();
 
 	//if this doesn't work when i commit, it's because it decides when it if it wants to work or not
-	if(command != "") {
 		if(comi != 0) {
 			char target[strlen(name)+1];
 			sprintf(target, "%s%s","%",name);
@@ -398,14 +397,13 @@ int main(int argc, char *argv[]) {
 				}
 				else {
 					strcat(command, argv[f+comi]);
-					printf("Argv: %s\nTarget: %s\n", argv[f+comi], target);
+					//printf("Argv: %s\nTarget: %s\n", argv[f+comi], target);
 				}
 				strcat(command, " ");
 			}
+			printf("Running: %s\n", command);
+			system(command);
 		}
-		printf("Running: %s\n", command);
-		system(command);
-	}
 	return 0;	
 }
 
