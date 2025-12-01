@@ -123,7 +123,52 @@ unsigned get_term_size(bool get_term_width) {
 }
 
 void help() {
-	printf("uhhh... idk good luck\n");
+	printf("A simple TUI timer and stopwatch made in C\n");
+	printf("\n");
+	printf("Usage:\n");
+	printf("   tty-timed [TYPE OPTIONS...] [OPTIONS...]\n");
+	printf("\n");
+	
+	printf("Type Options [TYPE OPTIONS...]:\n");
+	printf("   stopwatch\n");
+	printf("   timer\n");
+	printf("   random    Randomly picks either Timer or Stopwatch\n");
+	printf("\n");
+
+	printf("Time Options [OPTIONS...]:\n");
+	printf("   -S --seconds    Adds the inputted amount of seconds    Ex: [tty-timed timer -S 40] (Output: 00:40)\n");
+	printf("   -M --minutes    Adds the inputted amount of minutes    Ex: [tty-timed timer -M 5] (Output: 05:00)\n");
+	printf("   -H --hours      Adds the inputted amount of hours      Ex: [tty-timed timer -H 6] (Output: 06:00:00)\n");
+	printf("\n");
+
+	printf("Customization Options [OPTIONS...]:\n");
+	printf("   -n --name       Adds your input above the timer/stopwatch\n");
+	printf("\n");
+	printf("   -c --color      Changes the color of the timer/stopwatch\n");
+	printf("      Usage of color:\n");
+	printf("         --color [COLOR OPTIONS] [COLOR] or -c [COLOR OPTIONS...]\n");
+	printf("      Color Options [COLOR OPTIONS...]:\n");
+	printf("         direct     uses values 1-1000 for red, green, and blue    Ex: [tty-timed timer -S 40 -C direct 1000 0 0] (Output but imagine it's red: 00:40)\n");
+	printf("         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] (Output but imagine it's blue: 00:40)\n");
+	printf("         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 00ff00] (Output but imagine it's green: 00:40)\n");
+	printf("\n");
+	printf("   --run    runs an inputted console command at the end or if interrupted and has to be at the end of the args    Ex: [tty-timed timer -S 4 --run mpv /path/to/vid.mp4] (runs mpv at the end or if interrupted)\n");
+	printf("      Additional Notes of the run command:\n");
+	printf("         If you put \"%%\" and then with no space your inputted name, it will output the absolute seconds. Meaning 1:30 will output as 90.\n");
+	printf("         Example: [tty-timed stopwatch -n example --run tty-timed timer -S %%example] (Whenever the function is interuptted, a timer will countdown from the time that was on the stopwatch)\n");
+	printf("\n");
+	printf("   -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause) as input   Default: can pause\n");
+	printf("   -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered) as input               Default: centered\n");
+	printf("\n");
+
+	printf("Other Options [OPTIONS...]:\n");
+	printf("   -v --version    Prints the version and commit it was made on\n");
+	printf("   -d --debug      Prints some addtional infomation for debug\n");
+	printf("   -h --help       Prints this screen\n");
+	printf("\n");
+
+	printf("Additional notes:\n");
+	printf("   Parsing is case sensitive, meaning make sure capitals are correct. Ex: [tty-timed timer -h 6] (Output: This help function) vs [tty-timed timer -H 6] (Output: 06:00:00)\n");
 }
 
 void display() {
@@ -334,6 +379,7 @@ int main(int argc, char *argv[]) {
 	}
 	else{
 		printf("Unrecognized option '%s', please use either 'stopwatch', 'timer', or 'random' for the first argument.\n", argv[1]);
+		help();
 		fflush(stdout);
 		return 0;
 	}
@@ -406,4 +452,3 @@ int main(int argc, char *argv[]) {
 		}
 	return 0;	
 }
-
