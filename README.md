@@ -1,9 +1,14 @@
 # TTY-Timed
-A simple TUI timer and stopwatch script made for Linux 
+A simple TUI timer and stopwatch script made for Linux
 
-This script is currently in testing, bugs are to be expected
+## Dependencies
+The dependencies are ncurses, glibc, gcc, and git 
 
-### How to build
+### Install for Arch
+```bash
+sudo pacman -S ncurses git glibc gcc
+```
+## How to build
 
 ```bash
 git clone https://github.com/SlurpyIsADev/TTY-Timed.git
@@ -11,7 +16,7 @@ cd TTY-Timed || cd TTY-Timed-main
 gcc tty-timed.c Font/default-font.c -lncurses -o tty-timed -DCOMMIT="\"$(git rev-parse HEAD)\"" 
 ```
 
-### Usage
+## Usage
 ```bash
 A simple TUI timer and stopwatch made in C
 
@@ -48,15 +53,18 @@ Other Options:
    -h --help       Prints this screen
 ```
 
-### Notes
+## Notes
 ```bash
 Additional notes:
    Parsing is case sensitive, meaning make sure capitals are correct. Ex: [tty-timed timer -h 6] (Output: This help function) vs [tty-timed timer -H 6] (Output: 06:00:00)
 
+   Due to a strange C restriction, to use quotation marks you will need to type \" for each quotation mark.
+
    Backup button "X":
-     Since "Ctrl+C" in this script doesn't actually kill the script, the backup kill button is "X". Press "X" and it will stop the script instantly without running the command if one is set.
+     Since "Ctrl+C" in this script does not actually kill the script, the backup kill button is "X". Press "X" and it will stop the script instantly without running the command if one is set.
      "Ctrl+C" will still stop the script if no command is set.
      The "X" key is specific cases, here is an example case: [tty-timed stopwatch --run forever.sh] where "forever.sh" is just [tty-timed stopwatch --run forever.sh].
+     I would recommed spamming the "X" key because detection is not the best.
 
    Run command info below (--run):
      The run command will execute at the end of a timer or when the program is interrupted (Ctrl+C).
