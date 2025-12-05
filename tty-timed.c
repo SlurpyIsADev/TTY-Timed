@@ -143,8 +143,11 @@ void help() {
 
 	printf("Customization Options [OPTIONS...]:\n");
 	printf("   -n --name       Adds your input above the timer/stopwatch\n");
+	printf("   --run           runs an inputted console command. Please read additional notes before use\n");
+	printf("   -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause) as input   Default: can pause\n");
+	printf("   -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered) as input               Default: centered\n");
 	printf("\n");
-	printf("   -c --color      Changes the color of the timer/stopwatch\n");
+	printf("   -C --color      Changes the color of the timer/stopwatch\n");
 	printf("      Usage of color:\n");
 	printf("         --color [COLOR OPTIONS] [COLOR] or -c [COLOR OPTIONS...]\n");
 	printf("      Color Options [COLOR OPTIONS...]:\n");
@@ -152,16 +155,8 @@ void help() {
 	printf("         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] (Output but imagine it's blue: 00:40)\n");
 	printf("         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 00ff00] (Output but imagine it's green: 00:40)\n");
 	printf("\n");
-	printf("   --run    runs an inputted console command at the end or if interrupted and has to be at the end of the args    Ex: [tty-timed timer -S 4 --run mpv /path/to/vid.mp4] (runs mpv at the end or if interrupted)\n");
-	printf("      Additional Notes of the run command:\n");
-	printf("         If you put \"%%\" and then with no space your inputted name, it will output the absolute seconds. Meaning 1:30 will output as 90.\n");
-	printf("         Example: [tty-timed stopwatch -n example --run tty-timed timer -S %%example] (Whenever the function is interuptted, a timer will countdown from the time that was on the stopwatch)\n");
-	printf("\n");
-	printf("   -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause) as input   Default: can pause\n");
-	printf("   -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered) as input               Default: centered\n");
-	printf("\n");
 
-	printf("Other Options [OPTIONS...]:\n");
+	printf("Other Options:\n");
 	printf("   -v --version    Prints the version and commit it was made on\n");
 	printf("   -d --debug      Prints some addtional infomation for debug\n");
 	printf("   -h --help       Prints this screen\n");
@@ -169,6 +164,19 @@ void help() {
 
 	printf("Additional notes:\n");
 	printf("   Parsing is case sensitive, meaning make sure capitals are correct. Ex: [tty-timed timer -h 6] (Output: This help function) vs [tty-timed timer -H 6] (Output: 06:00:00)\n");
+	printf("\n");
+	printf("   Backup button \"X\":\n");
+	printf("     Since \"Ctrl+C\" in this script doesn't actually kill the script, the backup kill button is \"X\". Press \"X\" and it will stop the script instantly without running the command if one is set.\n");
+	printf("     \"Ctrl+C\" will still stop the script if no command is set.\n");
+	printf("     The \"X\" key is specific cases, here is an example case: [tty-timed stopwatch --run forever.sh] where \"forever.sh\" is just [tty-timed stopwatch --run forever.sh].\n");
+	printf("\n");
+	printf("   Run command info below (--run):\n");
+	printf("     The run command will execute at the end of a timer or when the program is interrupted (Ctrl+C).\n");
+	printf("     The run command should placed at the end of the args because it records every arg after it. So, [--run sometermcommand -M 5] would run \"sometermcommand\" with the argument \"-M 5\"\n");
+	printf("     In the run command, if you put \"%%\" and then with no space your inputted name, it will output the absolute seconds. Meaning 1:30 will output as 90. See the example below.\n");
+	printf("     Example: [tty-timed stopwatch -n example --run tty-timed timer -S %%example] (Whenever the function is interuptted, a timer will countdown from the time that was on the stopwatch)\n");
+	printf("\n");
+	printf("   The seconds (-S), minutes (-M), and hours (-H) args are not locked to 60, putting [-S 156] or [-M 90] will work just fine\n");
 }
 
 void display() {
@@ -226,7 +234,7 @@ int main(int argc, char *argv[]) {
 		if (skiparg == 0) {
 			//version
 			if((strcmp(argv[i], "-v") == 0) || (strcmp(argv[i], "--version") == 0)) {
-				printf("Version: Somewhere closer to release idk\n");
+				printf("0.9.0\n");
 				if(COMMIT != "") {
 				printf("Built at commit %s\n", COMMIT);
 				}
@@ -408,7 +416,11 @@ int main(int argc, char *argv[]) {
 			sleep(1);
 			if (getch() == 32 && canpause) {
 				ispaused = true;
-			} 
+			}
+			else if (getch() == 120) {
+				endwin();
+				return 0;
+			}
 			(*LogicFunc)();
 			flushinp();
 			erase();
@@ -419,6 +431,10 @@ int main(int argc, char *argv[]) {
 			if (getch() == 32) {
 				ispaused = false;
 			} 
+			else if (getch() == 120) {
+				endwin();
+				return 0;
+			}
 			erase();
 		}
 		if (debugmode){
