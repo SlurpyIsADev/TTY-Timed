@@ -1,6 +1,6 @@
 # Maintainer: SlurpyIsADev <ThisisA1029@gmail.com>
 pkgname='tty-timed'
-pkgver=r31.84e998c
+pkgver=1.0.0
 pkgrel=1
 pkgdesc="A simple TUI timer and stopwatch script"
 arch=('x86_64')
@@ -9,7 +9,6 @@ license=('MIT')
 depends=('ncurses' 'glibc')
 makedepends=('git' 'gcc')
 source=('tty-timed::git+https://github.com/SlurpyIsADev/TTY-Timed')
-# noextract=()
 sha256sums=('SKIP')
 
 # Please refer to the 'USING VCS SOURCES' section of the PKGBUILD man page for

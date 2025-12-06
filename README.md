@@ -4,11 +4,19 @@ A simple TUI timer and stopwatch script made for Linux
 ## Dependencies
 The dependencies are ncurses, glibc, gcc, and git 
 
-### Install for Arch
+### Dependencies install command for Arch
 ```bash
 sudo pacman -S ncurses git glibc gcc
 ```
-## How to build
+## Install
+
+```bash
+git clone https://github.com/SlurpyIsADev/TTY-Timed.git
+cd TTY-Timed || cd TTY-Timed-main 
+makepkg -si
+```
+
+## Manual build
 
 ```bash
 git clone https://github.com/SlurpyIsADev/TTY-Timed.git
