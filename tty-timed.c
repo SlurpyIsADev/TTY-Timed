@@ -142,6 +142,11 @@ void help(bool shortd) {
 	printf("   -H --hours      Adds the inputted amount of hours      Ex: [tty-timed timer -H 6] (Output: 06:00:00)\n");
 	printf("\n");
 
+	printf("Controls:\n");
+	printf("   \"Spacebar\"  Pauses the timer if pause is enabled\n");
+	printf("   \"X\"         Ends the script instantly without running the input of \"--run\" if there is one\n");
+	printf("\n");
+
 	printf("Customization Options [OPTIONS...]:\n");
 	printf("   -n --name       Adds your input above the timer/stopwatch\n");
 	if(shortd == false) {
@@ -150,8 +155,8 @@ void help(bool shortd) {
 	else {
 		printf("   --run           runs an inputted console command. Please read additional notes before use in the extended help function\n");
 	}
-	printf("   -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause) as input   Default: can pause\n");
-	printf("   -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered) as input               Default: centered\n");
+	printf("   -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause)  Default: can pause\n");
+	printf("   -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered)              Default: centered\n");
 	if(shortd == false) {
 		printf("\n");
 		printf("   -C --color      Changes the color of the timer/stopwatch\n");
@@ -174,8 +179,6 @@ void help(bool shortd) {
 		printf("   Due to a strange C restriction, to use quotation marks you will need to type \\\" for each quotation mark.\n");
 		printf("\n");
 		printf("   Backup button \"X\":\n");
-		printf("     Since \"Ctrl+C\" in this script does not actually kill the script, the backup kill button is \"X\". Press \"X\" and it will stop the script instantly without running the command if one is set.\n");
-		printf("     \"Ctrl+C\" will still stop the script if no command is set.\n");
 		printf("     The \"X\" key is specific cases, here is an example case: [tty-timed stopwatch --run forever.sh] where \"forever.sh\" is just [tty-timed stopwatch --run forever.sh].\n");
 		printf("     I would recommed spamming the \"X\" key because detection is not the best.\n");
 		printf("\n");
@@ -186,6 +189,7 @@ void help(bool shortd) {
 		printf("     Example: [tty-timed stopwatch -n example --run tty-timed timer -S %%example] (Whenever the function is interuptted, a timer will countdown from the time that was on the stopwatch)\n");
 		printf("\n");
 		printf("   The seconds (-S), minutes (-M), and hours (-H) args are not locked to 60, putting [-S 156] or [-M 90] will work just fine\n");
+		printf("\n");
 	}
 	else {
 		printf("   -C --color      Changes the color of the timer/stopwatch, use the extended help for usage\n");
@@ -429,9 +433,11 @@ int main(int argc, char *argv[]) {
 			display();
 			timeout(0);
 			sleep(1);
+			//pause
 			if (getch() == 32 && canpause) {
 				ispaused = true;
 			}
+			// X
 			else if (getch() == 120) {
 				endwin();
 				return 0;
@@ -443,9 +449,11 @@ int main(int argc, char *argv[]) {
 		else {
 			display();
 			timeout(1000);
+			//unpause
 			if (getch() == 32) {
 				ispaused = false;
 			} 
+			// X
 			else if (getch() == 120) {
 				endwin();
 				return 0;
@@ -463,9 +471,10 @@ int main(int argc, char *argv[]) {
 	endwin();
 
 	//if this doesn't work when i commit, it's because it decides when it if it wants to work or not
+	//This is for --run
 		if(comi != 0) {
 			char target[strlen(name)+1];
-			sprintf(target, "%s%s","%",name);
+			sprintf(target, "%%%s",name);
 			char secondsSTR[20];
 			sprintf(secondsSTR, "%d", comabseconds);
 			for (int f = 1; f < argc-comi; f++) {
