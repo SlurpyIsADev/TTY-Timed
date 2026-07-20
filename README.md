@@ -55,23 +55,23 @@ Customization Options [OPTIONS...]:
       Usage of color:
          --color [COLOR OPTIONS] [COLOR] or -c [COLOR OPTIONS...]
       Color Options [COLOR OPTIONS...]:
-         direct     uses values 1-1000 for red, green, and blue    Ex: [tty-timed timer -S 40 -C direct 1000 0 0]
+         direct     uses values 1-1000 for red, green, and blue
 ```
-Output:
+Ex: [tty-timed timer -S 40 -C direct 1000 0 0]  Output:
 
 ![red](README/red.png)
 
 ```
-         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] 
+         rgb        uses values 1-255 for red, green, and blue 
 ```
-Output:
+Ex: [tty-timed timer -S 40 -C rgb 0 255 0]  Output:
 
 ![green](README/green.png)
 
 ```
-         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 0000ff] 
+         hex        uses a hex value without the # for color
 ```
-Output:
+Ex: [tty-timed timer -S 40 -C hex 0000ff]  Output:
 
 ![blue](README/blue.png)
 
