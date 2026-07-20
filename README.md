@@ -1,9 +1,9 @@
-<h1><p style="text-align:center"> TTY-Timed</p></h1>
-<p style="text-align: center;">A simple TUI timer and stopwatch script made for Linux</p>
+<h1><p align="center"> TTY-Timed</p></h1>
+<p align="center">A simple TUI timer and stopwatch script made for Linux</p>
 
-<p style="text-align:center"><img src="README/Main.png"></p>
+<p align="center"><img src="README/Main.png"></p>
 
-<p style="text-align:center">This project was made so I could understand C a bit more, this project will likely receive little to no feature updates (I will be doing bug fixes though because I do use this a lot)</p>
+<p align="center">This project was made so I could understand C a bit more, this project will likely receive little to no feature updates (I will be doing bug fixes though because I do use this a lot)</p>
 
 ## Dependencies
 The dependencies are ncurses, glibc, gcc, and git 
