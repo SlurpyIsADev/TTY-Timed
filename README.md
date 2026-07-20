@@ -1,7 +1,9 @@
-# TTY-Timed
-A simple TUI timer and stopwatch script made for Linux
+<h1><p style="text-align:center"> TTY-Timed</p></h1>
+<p style="text-align: center;">A simple TUI timer and stopwatch script made for Linux</p>
 
-This project was made so I could understand C a bit more, this project will likely receive little to no feature updates (I will be doing bug fixes though because I do use this a lot)
+<p style="text-align:center"><img src="README/Main.png"></p>
+
+<p style="text-align:center">This project was made so I could understand C a bit more, this project will likely receive little to no feature updates (I will be doing bug fixes though because I do use this a lot)</p>
 
 ## Dependencies
 The dependencies are ncurses, glibc, gcc, and git 
@@ -34,9 +36,9 @@ Usage:
    tty-timed [TYPE OPTIONS...] [OPTIONS...]
 
 Type Options [TYPE OPTIONS...]:
-   stopwatch
-   timer
-   random    Randomly picks either Timer or Stopwatch
+   s stopwatch
+   t timer
+   r random    Randomly picks either Timer or Stopwatch
 
 Time Options [OPTIONS...]:
    -S --seconds    Adds the inputted amount of seconds    Ex: [tty-timed timer -S 40] (Output: 00:40)
@@ -44,7 +46,7 @@ Time Options [OPTIONS...]:
    -H --hours      Adds the inputted amount of hours      Ex: [tty-timed timer -H 6] (Output: 06:00:00)
 
 Customization Options [OPTIONS...]:
-   -n --name       Adds your input above the timer/stopwatch
+   -n --name       Adds your input above the timer/stopwatch, no spaces
    --run           runs an inputted console command. Please read additional notes before use
    -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause) as input   Default: can pause
    -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered) as input               Default: centered
@@ -53,15 +55,35 @@ Customization Options [OPTIONS...]:
       Usage of color:
          --color [COLOR OPTIONS] [COLOR] or -c [COLOR OPTIONS...]
       Color Options [COLOR OPTIONS...]:
-         direct     uses values 1-1000 for red, green, and blue    Ex: [tty-timed timer -S 40 -C direct 1000 0 0] (Output but imagine it's red: 00:40)
-         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] (Output but imagine it's blue: 00:40)
-         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 00ff00] (Output but imagine it's green: 00:40)
+         direct     uses values 1-1000 for red, green, and blue    Ex: [tty-timed timer -S 40 -C direct 1000 0 0]
+```
+Output:
 
+![red](README/red.png)
+
+```
+         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] 
+```
+Output:
+
+![green](README/green.png)
+
+```
+         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 0000ff] 
+```
+Output:
+
+![blue](README/blue.png)
+
+```
 Other Options:
    -v --version    Prints the version and commit it was made on
    -d --debug      Prints some addtional infomation for debug
    -h --help       Prints this screen
 ```
+
+### Run command example:
+![Run example](README/TTY-TIMED_SHOWCASE.gif)
 
 ## Notes
 ```bash

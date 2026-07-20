@@ -1,6 +1,6 @@
 # Maintainer: SlurpyIsADev <ThisisA1029@gmail.com>
 pkgname='tty-timed'
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="A simple TUI timer and stopwatch script"
 arch=('any')

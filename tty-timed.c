@@ -131,9 +131,9 @@ void help(bool shortd) {
 	printf("\n");
 	
 	printf("Type Options [TYPE OPTIONS...]:\n");
-	printf("   stopwatch\n");
-	printf("   timer\n");
-	printf("   random    Randomly picks either Timer or Stopwatch\n");
+	printf("   s stopwatch\n");
+	printf("   t timer\n");
+	printf("   r random    Randomly picks either Timer or Stopwatch\n");
 	printf("\n");
 
 	printf("Time Options [OPTIONS...]:\n");
@@ -164,8 +164,8 @@ void help(bool shortd) {
 		printf("         --color [COLOR OPTIONS] [COLOR] or -c [COLOR OPTIONS...]\n");
 		printf("      Color Options [COLOR OPTIONS...]:\n");
 		printf("         direct     uses values 1-1000 for red, green, and blue    Ex: [tty-timed timer -S 40 -C direct 1000 0 0] (Output but imagine it's red: 00:40)\n");
-		printf("         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] (Output but imagine it's blue: 00:40)\n");
-		printf("         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 00ff00] (Output but imagine it's green: 00:40)\n");
+		printf("         rgb        uses values 1-255 for red, green, and blue     Ex: [tty-timed timer -S 40 -C rgb 0 255 0] (Output but imagine it's green: 00:40)\n");
+		printf("         hex        uses a hex value without the # for color       Ex: [tty-timed timer -S 40 -C hex 0000ff] (Output but imagine it's blue: 00:40)\n");
 		printf("\n");
 		printf("Other Options:\n");
 		printf("   -v --version    Prints the version and commit it was made on\n");
@@ -253,7 +253,7 @@ int main(int argc, char *argv[]) {
 		if (skiparg == 0) {
 			//version
 			if((strcmp(argv[i], "-v") == 0) || (strcmp(argv[i], "--version") == 0)) {
-				printf("1.0.0\n");
+				printf("1.0.1\n");
 				if(COMMIT != "") {
 				printf("Built at commit %s\n", COMMIT);
 				}
@@ -386,17 +386,17 @@ int main(int argc, char *argv[]) {
     }
 
 	//stopwatch (obv)
-	if(strcmp(argv[1], "stopwatch") == 0){
+	if((strcmp(argv[1], "stopwatch") == 0) || (strcmp(argv[1], "s") == 0)){
 		LogicFunc = &stopwatch;
 	}
 
 	//timer (obv)
-	else if(strcmp(argv[1], "timer") == 0){
+	else if((strcmp(argv[1], "timer") == 0) || (strcmp(argv[1], "t") == 0)){
 		LogicFunc = &timer;
 	}
 
 	//random (obv)
-	else if(strcmp(argv[1], "random") == 0){
+	else if((strcmp(argv[1], "random") == 0) || (strcmp(argv[1], "r") == 0)){
 		if(rand()%2 == 1){
 			LogicFunc = &stopwatch;
 		}
