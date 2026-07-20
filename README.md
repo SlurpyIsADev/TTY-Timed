@@ -1,6 +1,8 @@
 # TTY-Timed
 A simple TUI timer and stopwatch script made for Linux
 
+This project was made so I could understand C a bit more, this project will likely receive little to no feature updates (I will be doing bug fixes though because I do use this a lot)
+
 ## Dependencies
 The dependencies are ncurses, glibc, gcc, and git 
 
