@@ -47,10 +47,25 @@ Time Options [OPTIONS...]:
 
 Customization Options [OPTIONS...]:
    -n --name       Adds your input above the timer/stopwatch, no spaces
-   --run           runs an inputted console command. Please read additional notes before use
+   ```
+   ### Run command
+   ```
+   --run           runs an inputted console command. Please read additional notes below
+
+   Run command info below (--run):
+     The run command will execute at the end of a timer or when the program is interrupted (Ctrl+C).
+     The run command should placed at the end of the args because it records every arg after it. So, [--run sometermcommand -M 5] would run "sometermcommand" with the argument "-M 5"
+     In the run command, if you put "%" and then with no space your inputted name, it will output the absolute seconds. Meaning 1:30 will output as 90. See the example below.
+     Example: [tty-timed stopwatch -n example --run tty-timed timer -S %example] (Whenever the function is interuptted, a timer will countdown from the time that was on the stopwatch)
+   ```
+   ### Example:
+   ![Run example](README/TTY-TIMED_SHOWCASE.gif)
+   ```
    -p --canpause   Enables or disables the ability to pause using either 1 (for can pause) or 0 (for can not pause) as input   Default: can pause
    -c --iscentered Centers or uncenters the timer using either 1 (for centered) or 0 (for not centered) as input               Default: centered
-
+```
+### Color
+```
    -C --color      Changes the color of the timer/stopwatch
       Usage of color:
          --color [COLOR OPTIONS] [COLOR] or -c [COLOR OPTIONS...]
@@ -87,12 +102,8 @@ Other Options:
    -h --help       Prints this screen
 ```
 
-### Run command example:
-![Run example](README/TTY-TIMED_SHOWCASE.gif)
-
-## Notes
+## Additional notes
 ```bash
-Additional notes:
    Parsing is case sensitive, meaning make sure capitals are correct. Ex: [tty-timed timer -h 6] (Output: This help function) vs [tty-timed timer -H 6] (Output: 06:00:00)
 
    Due to a strange C restriction, to use quotation marks you will need to type \" for each quotation mark.
@@ -102,12 +113,6 @@ Additional notes:
      "Ctrl+C" will still stop the script if no command is set.
      The "X" key is specific cases, here is an example case: [tty-timed stopwatch --run forever.sh] where "forever.sh" is just [tty-timed stopwatch --run forever.sh].
      I would recommed spamming the "X" key because detection is not the best.
-
-   Run command info below (--run):
-     The run command will execute at the end of a timer or when the program is interrupted (Ctrl+C).
-     The run command should placed at the end of the args because it records every arg after it. So, [--run sometermcommand -M 5] would run "sometermcommand" with the argument "-M 5"
-     In the run command, if you put "%" and then with no space your inputted name, it will output the absolute seconds. Meaning 1:30 will output as 90. See the example below.
-     Example: [tty-timed stopwatch -n example --run tty-timed timer -S %example] (Whenever the function is interuptted, a timer will countdown from the time that was on the stopwatch)
 
    The seconds (-S), minutes (-M), and hours (-H) args are not locked to 60, putting [-S 156] or [-M 90] will work just fine
 ```
