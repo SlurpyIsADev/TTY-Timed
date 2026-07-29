@@ -148,7 +148,7 @@ void help(bool shortd) {
 	printf("\n");
 
 	printf("Customization Options [OPTIONS...]:\n");
-	printf("   -n --name       Adds your input above the timer/stopwatch\n");
+	printf("   -n --name       Adds your input above the timer/stopwatch, no spaces\n");
 	if(shortd == false) {
 		printf("   --run           runs an inputted console command. Please read additional notes before use\n");
 	}
