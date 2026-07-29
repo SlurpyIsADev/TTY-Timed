@@ -1,4 +1,8 @@
 <h1><p align="center"> TTY-Timed</p></h1>
+
+>[!WARNING]
+>Project was moved to Codeberg [(here)](https://codeberg.org/SlurpyIsADev/TTY-Timed), this repo will no longer be updated
+
 <p align="center">A simple TUI timer and stopwatch script made for Linux</p>
 
 <p align="center"><img src="README/Main.png"></p>
