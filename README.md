@@ -1,11 +1,12 @@
 <h1><p align="center"> TTY-Timed</p></h1>
 
->[!WARNING]
->Project was moved to Codeberg [(here)](https://codeberg.org/SlurpyIsADev/TTY-Timed), this repo will no longer be updated
-
 <p align="center">A simple TUI timer and stopwatch script made for Linux</p>
 
 <p align="center"><img src="README/Main.png"></p>
+
+>[!WARNING]
+>Project was moved to Codeberg [(here)](https://codeberg.org/SlurpyIsADev/TTY-Timed),
+>this repo will no longer be updated
 
 <p align="center">This project was made so I could understand C a bit more, this project will likely receive little to no feature updates (I will be doing bug fixes though because I do use this a lot)</p>
 
